@@ -2,8 +2,6 @@ import logging
 import requests
 from requests.exceptions import RequestException
 
-#logging.basicConfig(filename='output.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s: %(message)s')
-
 websites = ['https://www.youtube.com/', 'https://wikipedia.org', 'https://yahoo.com', 'https://yandex.ru',
             'https://whatsapp.com', 'https://amazon.com', 'https://www.ozon.ru', 'https://instagram.com',
             'https://twitter.com']
