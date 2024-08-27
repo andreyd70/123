@@ -1,29 +1,20 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-
+from fastapi import FastAPI, Path
 
 app = FastAPI()
 
-# Главная страница
 @app.get("/")
-def read_root():
-    return {"message": "Главная страница"}
+async def read_root():
+    return {"message": "Welcome to the API!"}
 
-# Страница администратора
-@app.get("/user/admin")
-def read_admin():
-    return {"message": "Вы вошли как администратор"}
-
-# Страница пользователя по ID
 @app.get("/user/{user_id}")
-def read_user(user_id: int):
-    return {"message": f"Вы вошли как пользователь № {user_id}"}
+async def get_user(
+    user_id: int = Path(..., ge=1, le=100, description="Enter User ID")
+):
+    return {"user_id": user_id}
 
-# Страница пользователя с параметрами в строке запроса
-class UserInfo(BaseModel):
-    username: str
-    age: int
-
-@app.get("/user")
-def read_user_info(username: str, age: int):
-    return {"message": f"Информация о пользователе. Имя: {username}, Возраст: {age}"}
+@app.get("/user/{username}/{age}")
+async def get_user_details(
+    username: str = Path(..., min_length=5, max_length=20, description="Enter username"),
+    age: int = Path(..., ge=18, le=120, description="Enter age")
+):
+    return {"username": username, "age": age}
